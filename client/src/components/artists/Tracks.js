@@ -39,20 +39,26 @@ function Tracks({ tracks }) {
     return <span>&#9654;</span>;
   };
 
+  // somehow id is not unqick
   return (
-    <div>
-      {tracks.map(track => {
+    <>
+      {tracks.map((track, index) => {
         const { id, name, imageUrl, previewUrl } = track;
 
         return (
-          <div key={id} onClick={playAudio(previewUrl)} className='track'>
+          <div
+            key={id + index}
+            onClick={playAudio(previewUrl)}
+            className='track'
+          >
+            <p>{id + index}</p>
             <img src={imageUrl} alt='track-image' className='track-image' />
             <p className='track-text'>{name}</p>
             <p className='track-icon'>{trackIcon(track)}</p>
           </div>
         );
       })}
-    </div>
+    </>
   );
 }
 

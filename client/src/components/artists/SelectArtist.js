@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Artist from './Artist';
 
 function SelectArtist() {
-  const [artistQuery, setArtistQuery] = useState('Maria Callas');
+  const [artistName, setArtistName] = useState('Maria Callas');
 
   return (
     <div className='App'>
@@ -10,8 +10,8 @@ function SelectArtist() {
       <div className='form'>
         <select
           id='selectedArtist'
-          onChange={event => setArtistQuery(event.target.value)}
-          value={artistQuery}
+          onChange={event => setArtistName(event.target.value)}
+          value={artistName}
         >
           <option value='Maria Callas'>Maria Callas</option>
           <option value='Luciano Pavarotti'>Luciano Pavarotti</option>
@@ -21,7 +21,7 @@ function SelectArtist() {
         </select>
       </div>
 
-      {artistQuery && <Artist artistName={artistQuery} />}
+      {artistName && <Artist artistName={artistName} />}
     </div>
   );
 }

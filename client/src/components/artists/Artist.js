@@ -1,38 +1,36 @@
 import React from 'react';
-
 import { useQuery, gql } from '@apollo/client';
-
 import Tracks from './Tracks';
+
+const GET_ARTIST = gql`
+  query getArtist($artistName: String!) {
+    artist(name: $artistName) {
+      name
+      imageUrl
+      genres
+      followers
+      id
+      followers
+      tracks {
+        id
+        name
+        imageUrl
+        previewUrl
+      }
+    }
+  }
+`;
 
 // https://www.apollographql.com/docs/react/v3.0-beta/data/queries/
 const Artist = ({ artistName }) => {
-  const GET_ARTIST = gql`
-    query getArtist($artistName: String!) {
-      artist(name: $artistName) {
-        name
-        imageUrl
-        genres
-        followers
-        id
-        followers
-        tracks {
-          id
-          name
-          imageUrl
-          previewUrl
-        }
-      }
-    }
-  `;
-
   const { data, loading, error } = useQuery(GET_ARTIST, {
-    variables: { artistName }
+    variables: { artistName },
+    fetchPolicy: 'network-only'
   });
+  // default cache-first doesn't work
 
   if (loading) return <h1>Loading...</h1>;
-  if (error) return <p style={{ color: 'red' }}>ERROR</p>;
-
-  if (!data.artist) return null;
+  if (error) return <p style={{ color: 'red' }}>{`Error! ${error.message}`}</p>;
 
   const { imageUrl, name, genres, followers, tracks } = data.artist;
 
