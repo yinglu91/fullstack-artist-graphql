@@ -33,11 +33,11 @@ const typeDefs = gql`
   type Song {
     id: ID!
     name: String!
-    artistName: String
     album: String
     url: String
     lyrics: String
     tabs: String
+    artist: ITuneArtist
   }
 
   type Artist {

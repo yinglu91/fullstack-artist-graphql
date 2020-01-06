@@ -23,7 +23,9 @@ module.exports = {
   Song: {
     lyrics: (song, _, ctx) => ctx.dataSources.Lyrics.bySong(song),
     tabs: ({ name, artistName }) =>
-      `http://www.songsterr.com/a/wa/bestMatchForQueryString?s=${name}&a=${artistName}`
+      `http://www.songsterr.com/a/wa/bestMatchForQueryString?s=${name}&a=${artistName}`,
+    artist: ({ artistId }, _, ctx) =>
+      ctx.dataSources.iTunes.artist({ id: artistId })
   }
 };
 
@@ -109,4 +111,21 @@ module.exports = {
 lyrics -- word
 tabs  - musicSheetUrl-- sheet music
 
+---
+{
+  songs(name: "Sun", limit: 1) {
+    id
+    name
+    album
+    url
+    lyrics
+    tabs
+    artist {
+      id
+      name
+      url
+      genre
+    }
+  }
+}
 */
