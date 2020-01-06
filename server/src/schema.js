@@ -13,12 +13,32 @@ const typeDefs = gql`
   # all types in GraphQL are nullable by default
   type Query {
     artist(name: String!): Artist
+    artists(name: String!, limit: Int = 5): [ITuneArtist]!
+    songs(name: String!, limit: Int = 10): [Song]!
   }
 
   # primitive type like ID, String, Boolean, or Int,
   # custom scalars like Date
 
   # GraphQL object type
+
+  type ITuneArtist {
+    id: ID!
+    name: String!
+    url: String
+    genre: String
+    songs(limit: Int = 10): [Song]!
+  }
+
+  type Song {
+    id: ID!
+    name: String!
+    artistName: String
+    album: String
+    url: String
+    lyrics: String
+    tabs: String
+  }
 
   type Artist {
     id: ID

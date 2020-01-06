@@ -1,0 +1,6 @@
+type ITuneArtist {
+  id: ID!
+  name: String!
+  url: String
+  genre: String
+}

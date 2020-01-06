@@ -1,0 +1,7 @@
+# import ITuneArtist from 'artist.graphql'
+# import Song from 'song.graphql'
+
+type Query {
+  artists(name: String!): [ITuneArtist]!
+  songs(name: String!): [Song]!
+}
