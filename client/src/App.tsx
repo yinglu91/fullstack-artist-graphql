@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import OperaArtist from './components/artists/SelectArtist';
 import PopArtist from './components/artists/SelectPopArtist';
 
-export default function App() {
+const App: React.FC = () => {
   return (
     <Router>
       <div>
@@ -35,4 +35,6 @@ export default function App() {
       </div>
     </Router>
   );
-}
+};
+
+export default App;

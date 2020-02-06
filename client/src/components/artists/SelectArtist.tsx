@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Artist from './Artist';
 
-function SelectArtist() {
+const SelectArtist: React.FC = () => {
   const [artistName, setArtistName] = useState('Maria Callas');
 
   return (
@@ -24,6 +24,6 @@ function SelectArtist() {
       {artistName && <Artist artistName={artistName} />}
     </div>
   );
-}
+};
 
 export default SelectArtist;

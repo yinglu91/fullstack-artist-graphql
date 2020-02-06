@@ -21,8 +21,12 @@ const GET_ARTIST = gql`
   }
 `;
 
+interface Props {
+  artistName: string;
+}
+
 // https://www.apollographql.com/docs/react/v3.0-beta/data/queries/
-const Artist = ({ artistName }) => {
+const Artist: React.FC<Props> = ({ artistName }) => {
   const { data, loading, error } = useQuery(GET_ARTIST, {
     variables: { artistName },
     fetchPolicy: 'network-only'
@@ -30,6 +34,7 @@ const Artist = ({ artistName }) => {
   // default cache-first doesn't work
 
   if (loading) return <h1>Loading...</h1>;
+
   if (error) return <p style={{ color: 'red' }}>{`Error! ${error.message}`}</p>;
 
   const { imageUrl, name, genres, followers, tracks } = data.artist;

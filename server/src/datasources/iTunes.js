@@ -1,8 +1,15 @@
-const { get } = require('got');
+const { RESTDataSource } = require('apollo-datasource-rest');
 
-// https://github.com/nathanchapman/graphql-music/#setup
-class iTunes {
+class iTunes extends RESTDataSource {
+  constructor() {
+    super();
+    this.baseURL = 'https://itunes.apple.com/';
+  }
+
+  // https://github.com/nathanchapman/graphql-music/#setup
+
   async artists({ name, limit }) {
+    console.log('YYYYY', this);
     const options = {
       query: {
         term: name,
@@ -13,7 +20,9 @@ class iTunes {
       json: true
     };
 
-    const { body } = await get('https://itunes.apple.com/search', options);
+    const { body } = await this.get('search', options);
+    console.log(body);
+
     const { results } = body;
     return results.map(artist => ({
       name: artist.artistName,
@@ -34,7 +43,7 @@ class iTunes {
       json: true
     };
 
-    const { body } = await get('https://itunes.apple.com/search', options);
+    const { body } = await this.get('search', options);
     const { results } = body;
     return results.map(song => ({
       name: song.trackName,
@@ -54,7 +63,7 @@ class iTunes {
 
     console.log(`looking up artist ${id}`);
 
-    const { body } = await get('https://itunes.apple.com/lookup', options);
+    const { body } = await this.get('lookup', options);
     const artist = body.results[0];
 
     return {

@@ -1,12 +1,24 @@
 import React, { useState } from 'react';
 import './artist.css';
 
-function Tracks({ tracks }) {
-  const [playing, setPlaying] = useState(false);
-  const [audio, setAudio] = useState(null);
-  const [playingPreviewUrl, setPlayingPreviewUrl] = useState(null);
+interface Track {
+  id: string;
+  name: string;
+  imageUrl: string;
+  previewUrl: string;
+}
+interface Props {
+  tracks: Track[];
+}
 
-  const playAudio = previewUrl => () => {
+const Tracks: React.FC<Props> = ({ tracks }) => {
+  const [playing, setPlaying] = useState<boolean>(false);
+  const [audio, setAudio] = useState<any>(null);
+  const [playingPreviewUrl, setPlayingPreviewUrl] = useState<string | null>(
+    null
+  );
+
+  const playAudio = (previewUrl: string) => () => {
     const audio = new Audio(previewUrl);
 
     if (!playing) {
@@ -27,7 +39,7 @@ function Tracks({ tracks }) {
     }
   };
 
-  const trackIcon = track => {
+  const trackIcon: React.FC<Track> = track => {
     if (!track.previewUrl) {
       return <span>N/A</span>;
     }
@@ -42,7 +54,7 @@ function Tracks({ tracks }) {
   // somehow id is not unqick
   return (
     <>
-      {tracks.map((track, index) => {
+      {tracks.map((track: Track, index: number) => {
         const { id, name, imageUrl, previewUrl } = track;
 
         return (
@@ -60,6 +72,6 @@ function Tracks({ tracks }) {
       })}
     </>
   );
-}
+};
 
 export default Tracks;
