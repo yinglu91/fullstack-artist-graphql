@@ -25,9 +25,32 @@ interface Props {
   artistName: string;
 }
 
+interface Track {
+  id: string;
+  name: string;
+  imageUrl: string;
+  previewUrl: string;
+}
+
+interface Artist {
+  imageUrl: string;
+  name: string;
+  genres: string[];
+  followers: number;
+  tracks: Track[];
+}
+
+// should be auto generated!?
+interface TData {
+  artist: Artist;
+}
+interface TVariables {
+  artistName: string;
+}
+
 // https://www.apollographql.com/docs/react/v3.0-beta/data/queries/
 const Artist: React.FC<Props> = ({ artistName }) => {
-  const { data, loading, error } = useQuery(GET_ARTIST, {
+  const { data, loading, error } = useQuery<TData, TVariables>(GET_ARTIST, {
     variables: { artistName },
     fetchPolicy: 'network-only'
   });
@@ -36,6 +59,8 @@ const Artist: React.FC<Props> = ({ artistName }) => {
   if (loading) return <h1>Loading...</h1>;
 
   if (error) return <p style={{ color: 'red' }}>{`Error! ${error.message}`}</p>;
+
+  if (!data) return <div>no data</div>;
 
   const { imageUrl, name, genres, followers, tracks } = data.artist;
 
