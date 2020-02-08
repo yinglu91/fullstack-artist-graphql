@@ -1,12 +1,19 @@
 import React, { useState } from 'react';
 import './artist.css';
 
-interface Track {
-  id: string;
-  name: string;
-  imageUrl: string;
-  previewUrl: string;
-}
+import {
+  GetArtistQuery,
+  GetArtistQueryVariables,
+  Artist,
+  Track
+} from '../../generated/graphql';
+
+// interface Track {
+//   id: string;
+//   name: string;
+//   imageUrl: string;
+//   previewUrl: string;
+// }
 interface Props {
   tracks: Track[];
 }
@@ -14,12 +21,12 @@ interface Props {
 const Tracks: React.FC<Props> = ({ tracks }) => {
   const [playing, setPlaying] = useState<boolean>(false);
   const [audio, setAudio] = useState<any>(null);
-  const [playingPreviewUrl, setPlayingPreviewUrl] = useState<string | null>(
-    null
-  );
+  const [playingPreviewUrl, setPlayingPreviewUrl] = useState<
+    string | undefined
+  >('');
 
-  const playAudio = (previewUrl: string) => () => {
-    const audio = new Audio(previewUrl);
+  const playAudio = (previewUrl: string | undefined) => () => {
+    const audio: HTMLAudioElement = new Audio(previewUrl);
 
     if (!playing) {
       audio.play();
@@ -60,7 +67,7 @@ const Tracks: React.FC<Props> = ({ tracks }) => {
         return (
           <div
             key={id + index}
-            onClick={playAudio(previewUrl)}
+            onClick={playAudio(previewUrl ? previewUrl : undefined)}
             className='track'
           >
             <p>{id + index}</p>

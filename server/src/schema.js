@@ -41,18 +41,18 @@ const typeDefs = gql`
   }
 
   type Artist {
-    id: ID
-    name: String
-    imageUrl: String
-    genres: [String]
-    followers: Int
-    tracks: [Track]
+    id: ID!
+    name: String!
+    imageUrl: String!
+    genres: [String!]!
+    followers: Int!
+    tracks: [Track!]!
   }
 
   type Track {
-    id: ID
-    name: String
-    imageUrl: String
+    id: ID!
+    name: String!
+    imageUrl: String!
     previewUrl: String
   }
 `;
