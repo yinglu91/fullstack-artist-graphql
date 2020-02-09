@@ -3,16 +3,8 @@ import { useQuery, gql } from '@apollo/client';
 import Tracks from './Tracks';
 import {
   GetArtistQuery,
-  GetArtistQueryVariables,
-  Artist,
-  Track
+  GetArtistQueryVariables
 } from '../../generated/graphql';
-// import {
-//   GetArtistQuery,
-//   GetArtistQueryVariables,
-//   Artist,
-//   Track
-// } from '../../generated/graphql';
 
 const GET_ARTIST = gql`
   query getArtist($artistName: String!) {
@@ -54,7 +46,6 @@ const _Artist: React.FC<Props> = ({ artistName }) => {
 
   if (!data || !data.artist) return <div>no data</div>;
 
-  // const artist = data.artist;
   const { imageUrl, name, genres, followers, tracks } = data.artist;
 
   return (
