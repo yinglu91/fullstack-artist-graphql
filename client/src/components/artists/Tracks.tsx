@@ -24,40 +24,7 @@ interface Props {
 
 const Tracks: React.FC<Props> = ({ tracks }) => {
   const musicContext = useContext<MusicContextProps>(MusicContext);
-  const {
-    removeMusic,
-    playMusic,
-    pauseMusic,
-    isPlaying,
-    musicUrl
-  } = musicContext;
-
-  const [playing, setPlaying] = useState<boolean>(false);
-  const [audio, setAudio] = useState<any>(null);
-  const [playingPreviewUrl, setPlayingPreviewUrl] = useState<
-    string | undefined
-  >('');
-
-  // const playAudio = (previewUrl: string | undefined) => () => {
-  //   const audio: HTMLAudioElement = new Audio(previewUrl);
-
-  //   if (!playing) {
-  //     audio.play();
-
-  //     setPlaying(true);
-  //     setPlayingPreviewUrl(previewUrl);
-  //   } else {
-  //     audio.pause();
-
-  //     if (playingPreviewUrl === previewUrl) {
-  //       setPlaying(false);
-  //     } else {
-  //       audio.play();
-  //       setAudio(audio);
-  //       setPlayingPreviewUrl(previewUrl);
-  //     }
-  //   }
-  // };
+  const { playMusic, pauseMusic, isPlaying, musicUrl } = musicContext;
 
   const trackIcon = (track: Track) => {
     if (!track.previewUrl) {
@@ -93,7 +60,7 @@ const Tracks: React.FC<Props> = ({ tracks }) => {
             }}
             className='track'
           >
-            <p>{id + index}</p>
+            {/* <p>{id + index}</p> */}
             <img src={imageUrl} alt='track-image' className='track-image' />
             <p className='track-text'>{name}</p>
             <p className='track-icon'>{trackIcon(track)}</p>
