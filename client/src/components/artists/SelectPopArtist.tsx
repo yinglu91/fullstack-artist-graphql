@@ -1,9 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
+
+import MusicContext from '../../context/music/musicContext';
+import { MusicContextProps } from '../../context/music/types';
 
 import Artist from './Artist';
 
 function SelectPopArtist() {
+  const musicContext = useContext<MusicContextProps>(MusicContext);
+  const { removeMusic } = musicContext;
+
   const [artistQuery, setArtistQuery] = useState('Whitney Houston');
+
+  useEffect(() => {
+    removeMusic();
+  }, []);
 
   return (
     <div className='App'>

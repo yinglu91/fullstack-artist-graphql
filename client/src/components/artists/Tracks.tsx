@@ -1,4 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
+
+import MusicContext from '../../context/music/musicContext';
+import { MusicContextProps } from '../../context/music/types';
+
 import './artist.css';
 
 import {
@@ -19,39 +23,48 @@ interface Props {
 }
 
 const Tracks: React.FC<Props> = ({ tracks }) => {
+  const musicContext = useContext<MusicContextProps>(MusicContext);
+  const {
+    removeMusic,
+    playMusic,
+    pauseMusic,
+    isPlaying,
+    musicUrl
+  } = musicContext;
+
   const [playing, setPlaying] = useState<boolean>(false);
   const [audio, setAudio] = useState<any>(null);
   const [playingPreviewUrl, setPlayingPreviewUrl] = useState<
     string | undefined
   >('');
 
-  const playAudio = (previewUrl: string | undefined) => () => {
-    const audio: HTMLAudioElement = new Audio(previewUrl);
+  // const playAudio = (previewUrl: string | undefined) => () => {
+  //   const audio: HTMLAudioElement = new Audio(previewUrl);
 
-    if (!playing) {
-      audio.play();
+  //   if (!playing) {
+  //     audio.play();
 
-      setPlaying(true);
-      setPlayingPreviewUrl(previewUrl);
-    } else {
-      audio.pause();
+  //     setPlaying(true);
+  //     setPlayingPreviewUrl(previewUrl);
+  //   } else {
+  //     audio.pause();
 
-      if (playingPreviewUrl === previewUrl) {
-        setPlaying(false);
-      } else {
-        audio.play();
-        setAudio(audio);
-        setPlayingPreviewUrl(previewUrl);
-      }
-    }
-  };
+  //     if (playingPreviewUrl === previewUrl) {
+  //       setPlaying(false);
+  //     } else {
+  //       audio.play();
+  //       setAudio(audio);
+  //       setPlayingPreviewUrl(previewUrl);
+  //     }
+  //   }
+  // };
 
   const trackIcon: React.FC<Track> = track => {
     if (!track.previewUrl) {
       return <span>N/A</span>;
     }
 
-    if (playing && playingPreviewUrl === track.previewUrl) {
+    if (isPlaying && musicUrl === track.previewUrl) {
       return <span>| |</span>;
     }
 
@@ -67,7 +80,9 @@ const Tracks: React.FC<Props> = ({ tracks }) => {
         return (
           <div
             key={id + index}
-            onClick={playAudio(previewUrl ? previewUrl : undefined)}
+            onClick={() => {
+              playMusic(previewUrl ? previewUrl : undefined);
+            }}
             className='track'
           >
             <p>{id + index}</p>

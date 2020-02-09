@@ -1,7 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
+
+import MusicContext from '../../context/music/musicContext';
+import { MusicContextProps } from '../../context/music/types';
+
 import Artist from './Artist';
 
-const SelectArtist: React.FC = () => {
+const SelectOperaArtist: React.FC = () => {
+  const musicContext = useContext<MusicContextProps>(MusicContext);
+  const { removeMusic } = musicContext;
+
+  useEffect(() => {
+    removeMusic();
+  }, []);
+
   const [artistName, setArtistName] = useState('Maria Callas');
 
   return (
@@ -26,4 +37,4 @@ const SelectArtist: React.FC = () => {
   );
 };
 
-export default SelectArtist;
+export default SelectOperaArtist;
