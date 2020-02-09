@@ -59,16 +59,20 @@ const Tracks: React.FC<Props> = ({ tracks }) => {
   //   }
   // };
 
-  const trackIcon: React.FC<Track> = track => {
+  const trackIcon = (track: Track) => {
     if (!track.previewUrl) {
       return <span>N/A</span>;
     }
 
-    if (isPlaying && musicUrl === track.previewUrl) {
-      return <span>| |</span>;
+    if (musicUrl === track.previewUrl) {
+      if (isPlaying) {
+        return <span>| |</span>;
+      } else {
+        return <span>&#9654;</span>;
+      }
+    } else {
+      return <span>&#9654;</span>;
     }
-
-    return <span>&#9654;</span>;
   };
 
   // somehow id is not unqick
@@ -81,7 +85,11 @@ const Tracks: React.FC<Props> = ({ tracks }) => {
           <div
             key={id + index}
             onClick={() => {
-              playMusic(previewUrl ? previewUrl : undefined);
+              if (isPlaying && previewUrl === musicUrl) {
+                pauseMusic();
+              } else {
+                playMusic(previewUrl ? previewUrl : undefined);
+              }
             }}
             className='track'
           >
