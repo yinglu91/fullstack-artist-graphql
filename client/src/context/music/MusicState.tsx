@@ -30,8 +30,8 @@ const MusicState: React.ComponentType<Props> = props => {
 
     dispatch({
       type: MusicActionTypes.playMusic,
-      audio: audio,
-      musicUrl: musicUrl
+      audio,
+      musicUrl
     });
   };
   //pauseMusic: Function;
